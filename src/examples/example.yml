@@ -6,8 +6,8 @@ description: >
 usage:
   version: 2.1
   orbs:
-    k8s-svc: avidaml/k8s-svc@1.0.0
+    <orb-name>: <namespace>/<orb-name>@1.2.3
   workflows:
     use-my-orb:
       jobs:
-        - k8s-svc/<job-name>
+        - <orb-name>/<job-name>
