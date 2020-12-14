@@ -28,5 +28,5 @@ Within the `@orb.yml` we generally specify 4 configuration keys
 ## Publishing process
 
     circleci orb create avidaml/service
-
-    circleci orb publish ./.circleci/config.yml avidaml/service@dev:alpha
+    circleci orb validate ./src/@orb.yml
+    circleci orb publish ./src/@orb.yml avidaml/service@dev:alpha
