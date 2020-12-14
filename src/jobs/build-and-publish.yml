@@ -13,7 +13,7 @@ parameters:
     type: env_var_name
     default: DOCKER_PASSWORD
     description: >
-      The name of the environment variable containing the Docker login password 
+      The name of the environment variable containing the Docker login password
   docker-server:
     type: string
     default: "ghcr.io/avidaml"
