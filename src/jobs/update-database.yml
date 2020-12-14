@@ -4,7 +4,7 @@ description: >
 executor: machine
 
 parameters:
-  db-server:
+  server:
     type: string
     description: >
       Name of database server
