@@ -4,7 +4,22 @@ description: >
 executor: machine
 
 parameters:
-  server:
+  azure-sp:
+    type: env_var_name
+    default: AZURE_SP
+    description: >
+      Name of environment variable storing the full name of the Service Principal, in the form http://app-url
+  azure-sp-password:
+    type: env_var_name
+    default: AZURE_SP_PASSWORD
+    description: >
+      Name of environment variable storing the password for the Service Principal
+  azure-sp-tenant:
+    type: env_var_name
+    default: AZURE_SP_TENANT
+    description: >
+      Name of environment variable storing the tenant ID for the Service Principal
+  db-server:
     type: string
     description: >
       Name of database server
@@ -40,14 +55,14 @@ steps:
           --name CircleCI \
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
-          --server << parameters.server >> \
+          --server << parameters.db-server >> \
           --start-ip-address $machine_ip --end-ip-address $machine_ip
   - run:
       name: Update database
       command: |
         docker run -v $PWD:/liquibase/changelog liquibase/liquibase \
-          --url="jdbc:sqlserver://<< parameters.server >>.database.windows.net:1433;database=avid;" \
-          --username=app@avid@<< parameters.server >> \
+          --url="jdbc:sqlserver://<< parameters.db-server >>.database.windows.net:1433;database=avid;" \
+          --username=app@avid@<< parameters.db-server >> \
           --password=$<< parameters.db-password >> \
           --changeLogFile=<< parameters.change-log-file >> \
           update
@@ -59,5 +74,5 @@ steps:
           --name CircleCI \
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
-          --server << parameters.server >>
+          --server << parameters.db-server >>
       when: always
