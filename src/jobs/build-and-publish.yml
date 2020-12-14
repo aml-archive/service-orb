@@ -4,12 +4,22 @@ description: >
 executor: machine
 
 parameters:
-  server:
+  docker-user:
+    type: env_var_name
+    default: DOCKER_USER
+    description: >
+      The name of the environment variable containing the Docker login user
+  docker-password:
+    type: env_var_name
+    default: DOCKER_PASSWORD
+    description: >
+      The name of the environment variable containing the Docker login password
+  docker-server:
     type: string
     default: "ghcr.io/avidaml"
     description: >
       Docker container registry
-  repo:
+  docker-repo:
     type: string
     default: ${CIRCLE_PROJECT_REPONAME}
     description: >
@@ -26,11 +36,11 @@ steps:
       name: Build image
       command: |
         docker build \
-          --build-arg NETRC="machine github.com login ${DOCKER_USER} password ${DOCKER_PASSWORD}" \
+          --build-arg NETRC="machine github.com login $<< parameters.docker-user >> password $<< parameters.docker-password >>" \
           --tag ${CIRCLE_PROJECT_REPONAME} .
   - run:
       name: Push image
       command: |
-        echo ${DOCKER_PASSWORD} | docker login << parameters.server >> -u ${DOCKER_USER} --password-stdin
-        docker tag << parameters.repo >> << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>
-        docker push << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>
+        echo $<< parameters.docker-password >> | docker login << parameters.docker-server >> -u $<< parameters.docker-user >> --password-stdin
+        docker tag << parameters.docker-repo >> << parameters.docker-server >>/<< parameters.docker-repo >>:<< parameters.tag >>
+        docker push << parameters.docker-server >>/<< parameters.docker-repo >>:<< parameters.tag >>
