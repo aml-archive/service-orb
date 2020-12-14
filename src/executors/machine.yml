@@ -2,4 +2,3 @@ description: >
   Executor to build Docker images.
 
 machine: true
-

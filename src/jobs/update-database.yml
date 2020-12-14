@@ -1,6 +1,6 @@
 description: >
-  Uses Liquibase to update a database  
-  
+  Uses Liquibase to update a database
+
 executor: machine
 
 parameters:
@@ -24,7 +24,7 @@ parameters:
       Azure resource group the database belongs to
   subscription:
     type: enum
-    enum: ["Staging","Production"]
+    enum: ["Staging", "Production"]
     description: >
       Azure subscription the database belongs to
 
