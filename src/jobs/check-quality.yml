@@ -1,0 +1,8 @@
+description: >
+  Initiates a code quality check using Sonar   
+
+executor: default
+  
+steps:
+  - checkout
+  - sonarcloud/scan

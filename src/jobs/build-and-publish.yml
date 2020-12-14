@@ -1,0 +1,36 @@
+description: >
+  Builds and publishes the microservice as a Docker image
+
+executor: machine
+
+parameters:
+  server:
+    type: string
+    default: "ghcr.io/avidaml"
+    description: >
+      Docker container registry
+  repo:
+    type: string
+    default: ${CIRCLE_PROJECT_REPONAME}
+    description: >
+      Docker container repo name
+  tag:
+    type: string
+    default: latest
+    description: >
+      Tag to apply to the image
+
+steps:
+  - checkout
+  - run:
+      name: Build image
+      command: |
+        docker build \
+          --build-arg NETRC="machine github.com login ${DOCKER_USER} password ${DOCKER_PASSWORD}" \
+          --tag ${CIRCLE_PROJECT_REPONAME} .
+  - run:
+      name: Push image
+      command: |
+        echo ${DOCKER_PASSWORD} | docker login << parameters.server >> -u ${DOCKER_USER} --password-stdin
+        docker tag << parameters.repo >> << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>
+        docker push << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>

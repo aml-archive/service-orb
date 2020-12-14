@@ -1,5 +1,5 @@
 description: >
-  This is a sample executor using Docker and Node.
+  Default executor using Docker and Node.
 docker:
   - image: 'cimg/node:<<parameters.tag>>'
 parameters:
