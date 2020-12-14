@@ -30,3 +30,4 @@ Within the `@orb.yml` we generally specify 4 configuration keys
     circleci orb create avidaml/service
     circleci orb validate ./src/@orb.yml
     circleci orb publish ./src/@orb.yml avidaml/service@dev:alpha
+    circleci orb publish promote <my-namespace>/<my-orb-name>@dev:first patch
