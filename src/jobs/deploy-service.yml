@@ -1,0 +1,46 @@
+description: >
+  Deploys a microservice to Kubernetes 
+  
+executor: azure-aks/default
+
+parameters:
+  cluster-name:
+    type: string
+    description: >
+      AKS cluster name
+  resource-group:
+    type: string
+    default: backend
+    description: >
+      The Azure resource group the cluster belongs to
+  subscription:
+    type: enum
+    enum: ["Staging","Production"]
+    description: >
+      The Azure subscription the cluster belongs to
+  chart:
+    type: string
+    default: https://avidaml.github.io/charts/microservice-1.tgz
+    description: >
+      The name of the Helm chart to apply
+  chart-values:
+    type: string
+    default: ./.circleci/helm-values.yaml
+    description: >
+      Values to use when applying the chart
+    
+steps:
+  - checkout
+  - azure-aks/update-kubeconfig-with-credentials:
+      cluster-name: << parameters.cluster-name >>
+      resource-group: << parameters.resource-group >>
+      subscription: << parameters.subscription >>
+      # install-kubectl: true
+      perform-login: true
+  - helm/upgrade-helm-chart:
+      chart: << parameters.chart >>
+      namespace: avid
+      release-name: ${CIRCLE_PROJECT_REPONAME}
+      values: << parameters.chart-values >>
+      helm-version: v3.4.1
+      force: true

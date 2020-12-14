@@ -1,4 +1,4 @@
-# Orb Source
+# Orb Development
 
 Orbs are shipped as individual `orb.yml` files, however, to make development easier, it is possible to author an orb in _unpacked_ form, which can be _packed_ with the CircleCI CLI and published.
 
@@ -24,3 +24,9 @@ Within the `@orb.yml` we generally specify 4 configuration keys
 ## See:
  - [Orb Author Intro](https://circleci.com/docs/2.0/orb-author-intro/#section=configuration)
  - [Reusable Configuration](https://circleci.com/docs/2.0/reusing-config)
+
+## Publishing process
+
+    circleci orb create avidaml/service
+
+    circleci orb publish ./.circleci/config.yml avidaml/service@dev:alpha
