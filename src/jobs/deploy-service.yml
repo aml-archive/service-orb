@@ -1,6 +1,6 @@
 description: >
-  Deploys a microservice to Kubernetes 
-  
+  Deploys a microservice to Kubernetes
+
 executor: azure-aks/default
 
 parameters:
@@ -15,7 +15,7 @@ parameters:
       The Azure resource group the cluster belongs to
   subscription:
     type: enum
-    enum: ["Staging","Production"]
+    enum: ["Staging", "Production"]
     description: >
       The Azure subscription the cluster belongs to
   chart:
@@ -28,7 +28,7 @@ parameters:
     default: ./.circleci/helm-values.yaml
     description: >
       Values to use when applying the chart
-    
+
 steps:
   - checkout
   - azure-aks/update-kubeconfig-with-credentials:

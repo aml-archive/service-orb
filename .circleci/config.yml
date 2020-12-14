@@ -29,7 +29,7 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - service/check
+      # - service/check
 
 workflows:
   # Prior to producing a development orb (which requires credentials) basic validation, linting, and even unit testing can be performed.
@@ -93,6 +93,6 @@ workflows:
             - integration-test-1
           filters:
             branches:
-              only: 
+              only:
                 - master
                 - main
