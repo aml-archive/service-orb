@@ -27,6 +27,14 @@ Within the `@orb.yml` we generally specify 4 configuration keys
 
 ## Publishing process
 
+Job approval requires a CircleCI  `Personal Access Token` to be set in the CIRCLE_TOKEN environment variable within the `orb-publishing` context.
+
+The automated process is triggered by a commit message containing [semver:patch|minor|major|skip]
+
+e.g. [semver:patch]
+
+Manual process:
+
     circleci orb create avidaml/service
     circleci orb validate ./src/@orb.yml
     circleci orb publish ./src/@orb.yml avidaml/service@dev:alpha
