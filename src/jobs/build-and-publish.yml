@@ -34,4 +34,3 @@ steps:
         echo ${DOCKER_PASSWORD} | docker login << parameters.server >> -u ${DOCKER_USER} --password-stdin
         docker tag << parameters.repo >> << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>
         docker push << parameters.server >>/<< parameters.repo >>:<< parameters.tag >>
-        
