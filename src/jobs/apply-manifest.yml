@@ -1,0 +1,37 @@
+description: >
+  Applies a Kubernetes manifest to the specified cluster.
+
+executor: azure-aks/default
+
+parameters:
+  cluster-name:
+    type: string
+    description: >
+      AKS cluster name
+  resource-group:
+    type: string
+    default: backend
+    description: >
+      The Azure resource group the cluster belongs to
+  subscription:
+    type: enum
+    enum: ["Staging", "Production"]
+    description: >
+      The Azure subscription the cluster belongs to
+  manifest:
+    type: string
+    default: ./.circleci/kubernetes.yaml
+    description: >
+      The manifest to apply
+      
+steps:
+  - checkout
+  - azure-aks/update-kubeconfig-with-credentials:
+      cluster-name: << parameters.cluster-name >>
+      resource-group: << parameters.resource-group >>
+      subscription: << parameters.subscription >>
+      install-kubectl: true
+      perform-login: true
+  - run:
+      name: Apply manifest
+      command: kubectl apply -f << parameters.manifest >>
