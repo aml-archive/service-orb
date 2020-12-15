@@ -52,7 +52,7 @@ steps:
       command: |
         machine_ip=$(wget -qO- http://checkip.amazonaws.com)
         az sql server firewall-rule create \
-          --name CircleCI \
+          --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
           --server << parameters.db-server >> \
@@ -71,7 +71,7 @@ steps:
       command: |
         public_ip=$(wget -qO- http://checkip.amazonaws.com)
         az sql server firewall-rule delete \
-          --name CircleCI \
+          --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
           --server << parameters.db-server >>
