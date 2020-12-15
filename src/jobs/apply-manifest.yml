@@ -23,7 +23,7 @@ parameters:
     default: ./.circleci/kubernetes.yaml
     description: >
       The manifest to apply
-      
+
 steps:
   - checkout
   - azure-aks/update-kubeconfig-with-credentials:
