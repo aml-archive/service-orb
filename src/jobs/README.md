@@ -8,7 +8,6 @@ Jobs may invoke orb commands and other steps to fully automate tasks with minima
 
 View the included _[hello.yml](./hello.yml)_ example.
 
-
 ```yaml
   # What will this job do?
   # Descriptions should be short, simple, and clear.
