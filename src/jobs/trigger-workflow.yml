@@ -16,13 +16,13 @@ parameters:
 steps:
   - when:
       condition:
-        not: << pipeline.parameters.deploy-to >>
+        not: << parameters.to >>
       steps:
         - run:
             name: Deployed to << parameters.to >>
             command: exit 0
   - unless:
-      condition: << pipeline.parameters.deploy-to >>
+      condition: << parameters.to >>
       steps:
         - run:
             name: Trigger << parameters.to >> workflow
