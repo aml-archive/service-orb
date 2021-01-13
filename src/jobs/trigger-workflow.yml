@@ -15,7 +15,8 @@ parameters:
     default: avidaml
 steps:
   - when:
-      not: << pipeline.parameters.deploy-to >>
+      condition:
+        not: << pipeline.parameters.deploy-to >>
       steps:
         - run:
             name: Deployed to << parameters.to >>
