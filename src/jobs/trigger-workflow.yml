@@ -13,6 +13,7 @@ parameters:
       Name of the workflow to trigger
   unless:
     type: string
+    default: ""
     description: >
       "Truthy" condition that will prevent workflow from being triggered
 
