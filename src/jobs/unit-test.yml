@@ -6,6 +6,6 @@ docker:
 
 steps:
   - checkout
-  - run: 
+  - run:
       name: Run tests
       command: go test -v ./.testing
