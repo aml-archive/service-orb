@@ -1,0 +1,11 @@
+description: >
+  Runs a service's unit tests
+
+docker:
+  - image: cimg/go:1.15.6
+
+steps:
+  - checkout
+  - run: 
+      name: Run tests
+      command: go test -v ./.testing
