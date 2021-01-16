@@ -1,32 +1,37 @@
 description: >
-  Triggers a workflaw that's respects the "deploy-to" parameter.
+  Triggers the specified workflow
 
 docker:
   - image: cimg/base:2021.01
 
 parameters:
-  to:
+  workflow:
     type: enum
-    enum: ["", "Staging", "Production"]
-    default: ""
+    enum: [deploy-staging, deploy-production]
+    default: deploy-production
     description: >
-      Workflow to trigger
-  organisation:
+      Name of the workflow to trigger
+  unless:
     type: string
     description: >
-      Your organisation name
-    default: avidaml
+      "Truthy" condition that will prevent workflow from being triggered
 
 steps:
   - when:
-      condition: << parameters.to >>
+      condition: << parameters.unless >>
       steps:
         - run:
-            name: Trigger << parameters.to >> workflow
+            name: Workflow not triggered as << parameters.unless >> is "true"
+            command: exit 0
+
+  - unless:
+      condition: << parameters.unless >>
+      steps:
+        - run:
+            name: Trigger << parameters.workflow >> workflow
             command: |
               curl -X POST \
-                --url https://circleci.com/api/v2/project/gh/<< parameters.organisation >>/${CIRCLE_PROJECT_REPONAME}/pipeline \
+                --url https://circleci.com/api/v2/project/gh/avidaml/${CIRCLE_PROJECT_REPONAME}/pipeline \
                 --header "Circle-Token: ${CIRCLE_TOKEN}" \
                 --header 'content-type: application/json' \
-                --data '{"branch":"main", "parameters":{"deploy-to":"<< parameters.to >>"}}'
-  - run: echo "finished or skipped triggering"
+                --data '{"branch":"'${CIRCLE_BRANCH}'", "parameters":{"workflow":"<< parameters.workflow >>"}}'
