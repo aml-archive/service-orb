@@ -11,7 +11,7 @@ parameters:
     default: deploy-production
     description: >
       Name of the workflow to trigger
-  unless-x:
+  unless:
     type: string
     default: ""
     description: >
@@ -19,13 +19,13 @@ parameters:
 
 steps:
   - when:
-      condition: << parameters.unless-x >>
+      condition: << parameters.unless >>
       steps:
         - run:
-            name: Workflow not triggered as << parameters.unless-x >> is "true"
+            name: Workflow not triggered as << parameters.unless >> is "true"
             command: exit 0
   - unless:
-      condition: << parameters.unless-x >>
+      condition: << parameters.unless >>
       steps:
         - run:
             name: Trigger << parameters.workflow >> workflow
