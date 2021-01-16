@@ -24,7 +24,6 @@ steps:
         - run:
             name: Workflow not triggered as << parameters.unless >> is "true"
             command: exit 0
-
   - unless:
       condition: << parameters.unless >>
       steps:
