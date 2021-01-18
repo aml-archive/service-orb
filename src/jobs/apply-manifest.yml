@@ -23,6 +23,11 @@ parameters:
     default: ./.circleci/kubernetes.yaml
     description: >
       The manifest to apply
+  restart:
+    type: bool
+    default: true
+    description: >
+      Restart each "restartable" resource in the mainfest.
 
 steps:
   - checkout
@@ -35,3 +40,9 @@ steps:
   - run:
       name: Apply manifest
       command: kubectl apply -f << parameters.manifest >>
+  - when:
+      condition: << parameters.restart >>
+      steps:
+        - run:
+            name: Restart
+            command: kubectl rollout restart -f << parameters.manifest >>
