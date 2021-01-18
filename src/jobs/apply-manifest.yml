@@ -24,7 +24,7 @@ parameters:
     description: >
       The manifest to apply
   restart:
-    type: bool
+    type: boolean
     default: true
     description: >
       Restart each "restartable" resource in the mainfest.
