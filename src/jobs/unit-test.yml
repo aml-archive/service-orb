@@ -22,6 +22,7 @@ parameters:
       Name of environment variable storing the tenant ID for the Service Principal
   db-server:
     type: string
+    default: ""
     description: >
       Name of database server
   resource-group:
