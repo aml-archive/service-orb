@@ -68,4 +68,5 @@ steps:
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
           --server << parameters.db-server >>
+        exit 0
       when: always
