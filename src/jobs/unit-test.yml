@@ -59,7 +59,7 @@ steps:
       name: Run tests
       command: go test -v ./.testing
 
-    # remove firewall rule
+    # remove firewall rule - if created
   - run:
       name: Delete firewall rule
       command: |
