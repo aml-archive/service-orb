@@ -41,8 +41,8 @@ steps:
   - when:
       condition: << parameters.db-server >>
       steps:
-        - azure-cli/install
-        - azure-cli/login-with-service-principal
+        - "azure-cli/install"
+        - "azure-cli/login-with-service-principal"
         - run:
             name: Add firewall rule
             command: |
@@ -61,7 +61,6 @@ steps:
 
     # remove firewall rule
   - run:
-      when: << parameters.db-server >>
       name: Delete firewall rule
       command: |
         public_ip=$(wget -qO- http://checkip.amazonaws.com)
@@ -70,3 +69,4 @@ steps:
           --resource-group << parameters.resource-group >> \
           --subscription << parameters.subscription >> \
           --server << parameters.db-server >>
+      when: always
