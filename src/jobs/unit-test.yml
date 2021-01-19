@@ -4,8 +4,69 @@ description: >
 docker:
   - image: cimg/go:1.15.6
 
+parameters:
+  azure-sp:
+    type: env_var_name
+    default: AZURE_SP
+    description: >
+      Name of environment variable storing the full name of the Service Principal, in the form http://app-url
+  azure-sp-password:
+    type: env_var_name
+    default: AZURE_SP_PASSWORD
+    description: >
+      Name of environment variable storing the password for the Service Principal
+  azure-sp-tenant:
+    type: env_var_name
+    default: AZURE_SP_TENANT
+    description: >
+      Name of environment variable storing the tenant ID for the Service Principal
+  db-server:
+    type: string
+    description: >
+      Name of database server
+  resource-group:
+    type: string
+    default: storage
+    description: >
+      Azure resource group the database belongs to
+  subscription:
+    type: enum
+    enum: ["Staging", "Production"]
+    default: Staging
+    description: >
+      Azure subscription the database belongs to
+
 steps:
+  # add firewall rule if unit tests need db access
+  - when:
+      condition: << parameters.db-server >>
+      steps:
+        - azure-cli/install
+        - azure-cli/login-with-service-principal
+        - run:
+            name: Add firewall rule
+            command: |
+              machine_ip=$(wget -qO- http://checkip.amazonaws.com)
+              az sql server firewall-rule create \
+                --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
+                --resource-group << parameters.resource-group >> \
+                --subscription << parameters.subscription >> \
+                --server << parameters.db-server >> \
+                --start-ip-address $machine_ip --end-ip-address $machine_ip
+
   - checkout
   - run:
       name: Run tests
       command: go test -v ./.testing
+
+    # remove firewall rule
+  - run:
+      when: << parameters.db-server >>
+      name: Delete firewall rule
+      command: |
+        public_ip=$(wget -qO- http://checkip.amazonaws.com)
+        az sql server firewall-rule delete \
+          --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
+          --resource-group << parameters.resource-group >> \
+          --subscription << parameters.subscription >> \
+          --server << parameters.db-server >>
