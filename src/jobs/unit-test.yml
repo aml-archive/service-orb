@@ -37,12 +37,11 @@ parameters:
       Azure subscription the database belongs to
 
 steps:
-  # add firewall rule if unit tests need db access
   - when:
       condition: << parameters.db-server >>
       steps:
-        - "azure-cli/install"
-        - "azure-cli/login-with-service-principal"
+        - azure-cli/install
+        - azure-cli/login-with-service-principal
         - run:
             name: Add firewall rule
             command: |
@@ -53,13 +52,10 @@ steps:
                 --subscription << parameters.subscription >> \
                 --server << parameters.db-server >> \
                 --start-ip-address $machine_ip --end-ip-address $machine_ip
-
   - checkout
   - run:
       name: Run tests
       command: go test -v ./.testing
-
-    # remove firewall rule - if created
   - run:
       name: Delete firewall rule
       command: |
