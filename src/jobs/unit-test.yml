@@ -60,7 +60,8 @@ steps:
   - run:
       name: Delete firewall rule
       command: |
-        set +eo pipefail
+        set +e
+        set +o pipefail
         public_ip=$(wget -qO- http://checkip.amazonaws.com)
         az sql server firewall-rule delete \
           --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
