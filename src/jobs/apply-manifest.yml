@@ -46,5 +46,7 @@ steps:
         - run:
             name: Restart
             command: |
+              set +e
+              set +o pipefail
               kubectl rollout restart -f << parameters.manifest >>
               exit 0
