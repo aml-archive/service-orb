@@ -45,4 +45,6 @@ steps:
       steps:
         - run:
             name: Restart
-            command: kubectl rollout restart -f << parameters.manifest >>
+            command: |
+              kubectl rollout restart -f << parameters.manifest >>
+              exit 0
