@@ -36,6 +36,16 @@ parameters:
     default: Staging
     description: >
       Azure subscription the database belongs to
+  gh-user:
+    type: env_var_name
+    default: DOCKER_USER
+    description: >
+      The name of the environment variable containing the GitHub login user
+  gh-token:
+    type: env_var_name
+    default: DOCKER_PASSWORD
+    description: >
+      The name of the environment variable containing the GitHub login password
 
 steps:
   - when:
@@ -57,7 +67,7 @@ steps:
   - run:
       name: Run tests
       command: |
-        git config --global url."https://$<< parameters.docker-user >>:$<< parameters.docker-password >>@github.com".insteadOf "https://github.com"
+        git config --global url."https://$<< parameters.gh-user >>:$<< parameters.gh-token >>@github.com".insteadOf "https://github.com"
         go env -w GOPRIVATE=github.com/avidaml/*
         go test -v ./.testing
   - run:
