@@ -67,7 +67,7 @@ steps:
   - run:
       name: Run tests
       command: |
-        git config --global url."https://$<< parameters.gh-user >>:$<< parameters.gh-token >>@github.com".insteadOf "https://github.com"
+        echo "machine github.com login $<< parameters.docker-user >> password $<< parameters.docker-password >>" >> ~/.netrc
         go env -w GOPRIVATE=github.com/avidaml/*
         go test -v ./.testing
   - run:
