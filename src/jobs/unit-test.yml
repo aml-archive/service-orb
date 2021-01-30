@@ -56,7 +56,10 @@ steps:
   - checkout
   - run:
       name: Run tests
-      command: go test -v ./.testing
+      command: |
+        git config --global url."https://$<< parameters.docker-user >>:$<< parameters.docker-password >>@github.com".insteadOf "https://github.com"
+        go env -w GOPRIVATE=github.com/avidaml/*
+        go test -v ./.testing
   - run:
       name: Delete firewall rule
       command: |
