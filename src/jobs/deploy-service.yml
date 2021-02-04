@@ -44,3 +44,4 @@ steps:
       values: << parameters.chart-values >>
       helm-version: v3.4.1
       force: true
+      timeout: 10m

@@ -10,6 +10,6 @@ display:
 orbs:
   azure-aks: circleci/azure-aks@0.2.1
   azure-cli: circleci/azure-cli@1.1.0
-  helm: circleci/helm@1.1.1
+  helm: circleci/helm@1.2.0
   sonarcloud: sonarsource/sonarcloud@1.0.2
   snyk: snyk/snyk@0.0.12
