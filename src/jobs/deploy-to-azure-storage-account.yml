@@ -27,7 +27,7 @@ steps:
       name: Deploy build
       command: |
         CNN_STRING=`az storage account show-connection-string \
-          --name st<< parameters.appName >><< parameters.environment >> \
+          --name st<< parameters.app-name >><< parameters.environment >> \
           --subscription << parameters.subscription >> \
           | jq '.connectionString'`
         az storage blob sync --source "./build/" --container \$web \
@@ -38,7 +38,7 @@ steps:
         az cdn endpoint purge \
           --resource-group web \
           -n cdne-website-<< parameters.environment >> \
-          --profile-name cdnp-<< parameters.appName >>-<< parameters.environment >> \
+          --profile-name cdnp-<< parameters.app-name >>-<< parameters.environment >> \
           --subscription << parameters.subscription >> \
           --content-paths /* \
           --no-wait
