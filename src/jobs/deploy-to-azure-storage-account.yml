@@ -1,0 +1,40 @@
+description: >
+  Deploys to an Azure Storage Account
+
+executor: azure-cli/default
+
+parameters:
+  environment:
+    type: string
+    description: >
+      [stg|prd] 
+  subscription:
+    type: string
+    description: >
+      [Staging|Production]
+
+steps:
+  - azure-cli/install
+  - run: apt-cache policy azure-cli | sudo apt-get install --allow-downgrades azure-cli=2.18.0-1~stretch
+  - azure-cli/login-with-service-principal
+  - attach_workspace:
+      at: .
+  - run:
+      name: Deploy build
+      command: |
+        CNN_STRING=`az storage account show-connection-string \
+          --name stwebsite<< parameters.environment >> \
+          --subscription << parameters.subscription >> \
+          | jq '.connectionString'`
+        az storage blob sync --source "./build/" --container \$web \
+          --connection-string $CNN_STRING
+  - run:
+      name: Clear cache
+      command: |
+        az cdn endpoint purge \
+          --resource-group web \
+          -n cdne-website-<< parameters.environment >> \
+          --profile-name cdnp-website-<< parameters.environment >> \
+          --subscription << parameters.subscription >> \
+          --content-paths /* \
+          --no-wait

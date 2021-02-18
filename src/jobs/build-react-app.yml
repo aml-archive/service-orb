@@ -1,0 +1,38 @@
+description: >
+  Builds a React applicaton
+
+executor: defalt
+
+docker:
+  - image: cimg/node:14.7.0
+
+parameters:
+  environment:
+    type: string
+    description: >
+      [stg|prd] 
+
+steps:
+  - checkout
+  - restore_cache:
+      name: Restore Yarn package cache
+      keys: 
+        - yarn-packages-{{ checksum "yarn.lock" }}
+        # - yarn-packages-
+  - run: 
+      name: Install yarn dependencies
+      command: yarn install
+  - save_cache:
+      name: Save Yarn package cache
+      key: yarn-packages-{{ checksum "yarn.lock" }}
+      paths:
+        - "node_modules"
+        - "~/.npm"
+        - "~/.cache/Cypress"
+  - run:
+      name: Build app
+      command: yarn << parameters.environment >>build
+  - persist_to_workspace:
+      root: .
+      paths:
+        - ./*
