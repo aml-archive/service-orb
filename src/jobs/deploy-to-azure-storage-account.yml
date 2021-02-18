@@ -37,7 +37,7 @@ steps:
       command: |
         az cdn endpoint purge \
           --resource-group web \
-          -n cdne-website-<< parameters.environment >> \
+          -n cdne-<< parameters.app-name >>-<< parameters.environment >> \
           --profile-name cdnp-<< parameters.app-name >>-<< parameters.environment >> \
           --subscription << parameters.subscription >> \
           --content-paths /* \
