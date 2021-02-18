@@ -10,7 +10,7 @@ parameters:
   environment:
     type: string
     description: >
-      [stg|prd]
+      Environment name. e.g. "stg", "prd"
 
 steps:
   - checkout

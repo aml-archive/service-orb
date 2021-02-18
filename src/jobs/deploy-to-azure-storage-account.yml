@@ -7,7 +7,11 @@ parameters:
   environment:
     type: string
     description: >
-      [stg|prd]
+      Environment name. e.g. "stg", "prd"
+  app-name:
+    type: string
+    description: >
+      Name of the app. Used to identify the corresponding storage account and cdn profile. e.g. "website", "webapp".
   subscription:
     type: string
     description: >
@@ -23,7 +27,7 @@ steps:
       name: Deploy build
       command: |
         CNN_STRING=`az storage account show-connection-string \
-          --name stwebsite<< parameters.environment >> \
+          --name st<< parameters.appName >><< parameters.environment >> \
           --subscription << parameters.subscription >> \
           | jq '.connectionString'`
         az storage blob sync --source "./build/" --container \$web \
@@ -34,7 +38,7 @@ steps:
         az cdn endpoint purge \
           --resource-group web \
           -n cdne-website-<< parameters.environment >> \
-          --profile-name cdnp-website-<< parameters.environment >> \
+          --profile-name cdnp-<< parameters.appName >>-<< parameters.environment >> \
           --subscription << parameters.subscription >> \
           --content-paths /* \
           --no-wait
