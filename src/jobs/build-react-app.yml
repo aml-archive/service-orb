@@ -1,7 +1,7 @@
 description: >
   Builds a React applicaton
 
-executor: defalt
+executor: default
 
 docker:
   - image: cimg/node:14.7.0
