@@ -7,7 +7,7 @@ parameters:
   environment:
     type: string
     description: >
-      [stg|prd] 
+      [stg|prd]
   subscription:
     type: string
     description: >

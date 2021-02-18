@@ -10,16 +10,16 @@ parameters:
   environment:
     type: string
     description: >
-      [stg|prd] 
+      [stg|prd]
 
 steps:
   - checkout
   - restore_cache:
       name: Restore Yarn package cache
-      keys: 
+      keys:
         - yarn-packages-{{ checksum "yarn.lock" }}
         # - yarn-packages-
-  - run: 
+  - run:
       name: Install yarn dependencies
       command: yarn install
   - save_cache:
