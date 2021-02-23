@@ -2,7 +2,7 @@ description: >
   Runs a service's unit tests
 
 docker:
-  - image: cimg/go:latest
+  - image: cimg/go:1.16
 
 parameters:
   azure-sp:
