@@ -1,5 +1,5 @@
 description: >
-  Deploys to an Azure Storage Account
+  Deploys a web app to Azure storage
 
 executor: azure-cli/default
 
