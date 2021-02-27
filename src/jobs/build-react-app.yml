@@ -18,7 +18,6 @@ steps:
       name: Restore Yarn package cache
       keys:
         - yarn-packages-{{ checksum "yarn.lock" }}
-        # - yarn-packages-
   - run:
       name: Install yarn dependencies
       command: yarn install
