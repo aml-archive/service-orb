@@ -25,6 +25,11 @@ parameters:
     default: ""
     description: >
       Name of database server
+  packages:
+    type: string
+    default: ./_tests
+    description: >
+      A space-separated list of packages to run unit tests for
   resource-group:
     type: string
     default: storage
@@ -56,7 +61,7 @@ steps:
   - checkout
   - run:
       name: Run tests
-      command: go test -v ./_tests
+      command: go test -v << parameters.packages >>
   - run:
       name: Delete firewall rule
       command: |
