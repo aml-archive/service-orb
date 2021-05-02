@@ -30,7 +30,7 @@ steps:
         - "~/.cache/Cypress"
   - run:
       name: Build app
-      command: yarn << parameters.environment >>build
+      command: yarn build:<< parameters.environment >>
   - persist_to_workspace:
       root: .
       paths:
