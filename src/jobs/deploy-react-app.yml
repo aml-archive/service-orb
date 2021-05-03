@@ -12,6 +12,11 @@ parameters:
     type: string
     description: >
       Name of the app. Used to identify the corresponding storage account and cdn profile. e.g. "website", "webapp".
+  build-dir:
+    type: string
+    default: build
+    description: >
+      Name of the build directory. Used to determine where to deploy build files. e.g. "build" or "dist".
   subscription:
     type: string
     description: >
@@ -30,7 +35,7 @@ steps:
           --name st<< parameters.app-name >><< parameters.environment >> \
           --subscription << parameters.subscription >> \
           | jq '.connectionString'`
-        az storage blob sync --source "./build/" --container \$web \
+        az storage blob sync --source "./<< parameters.build-dir >>/" --container \$web \
           --connection-string $CNN_STRING
   - run:
       name: Clear cache
