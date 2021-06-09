@@ -47,14 +47,14 @@ steps:
       steps:
         - helm/delete-helm-release:
             release-name: ${CIRCLE_PROJECT_REPONAME}
-            # helm-version: v3.6.2
+            helm-version: latest
 
   - helm/upgrade-helm-chart:
       chart: << parameters.chart >>
       namespace: avid
       release-name: ${CIRCLE_PROJECT_REPONAME}
       values: << parameters.chart-values >>
-      # helm-version: v3.6.2
+      helm-version: latest
       force: true
       timeout: 10m
       atomic: true
