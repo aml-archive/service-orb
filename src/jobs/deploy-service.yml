@@ -55,6 +55,6 @@ steps:
       release-name: ${CIRCLE_PROJECT_REPONAME}
       values: << parameters.chart-values >>
       helm-version: latest
-      force: true
+      # force: true
       timeout: 10m
       atomic: true
