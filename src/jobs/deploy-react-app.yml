@@ -24,7 +24,6 @@ parameters:
 
 steps:
   - azure-cli/install
-  - run: apt-cache policy azure-cli | sudo apt-get install --allow-downgrades azure-cli=2.18.0-1~stretch
   - azure-cli/login-with-service-principal
   - attach_workspace:
       at: .
