@@ -55,6 +55,10 @@ steps:
       release-name: ${CIRCLE_PROJECT_REPONAME}
       values: << parameters.chart-values >>
       helm-version: v3.6.0
-      # force: true
+      force: true
       timeout: 10m
       atomic: true
+
+      helm repo add stable https://charts.helm.sh/stable
+      helm uninstall ${CIRCLE_PROJECT_REPONAME}
+      helm upgrade --install subscription https://avidaml.github.io/charts/service-1.tgz -f ./.circleci/helm-values.yaml
