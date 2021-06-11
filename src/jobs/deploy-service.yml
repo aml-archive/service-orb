@@ -28,11 +28,11 @@ parameters:
     default: ./.circleci/helm-values.yaml
     description: >
       Values to use when applying the chart
-  reinstall:
-    type: boolean
-    default: false
-    description: >
-      Uninstall previous release before upgrading
+  # reinstall:
+  #   type: boolean
+  #   default: false
+  #   description: >
+  #     Uninstall previous release before upgrading
 
 steps:
   - checkout
@@ -42,12 +42,12 @@ steps:
       subscription: << parameters.subscription >>
       perform-login: true
 
-  - when:
-      condition: << parameters.reinstall >>
-      steps:
-        - helm/delete-helm-release:
-            release-name: ${CIRCLE_PROJECT_REPONAME}
-            helm-version: v3.6.0
+  # - when:
+  #     condition: << parameters.reinstall >>
+  #     steps:
+  #       - helm/delete-helm-release:
+  #           release-name: ${CIRCLE_PROJECT_REPONAME}
+  #           helm-version: v3.6.0
 
   - helm/upgrade-helm-chart:
       chart: << parameters.chart >>
