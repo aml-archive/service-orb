@@ -21,6 +21,11 @@ parameters:
     type: string
     description: >
       [Staging|Production]
+  cdn-profile:
+    type: string
+    default: cdnp-react
+    description: >
+      Name of the Azure CDN Profile excluding the stg/prd suffix
 
 steps:
   - azure-cli/install
@@ -42,7 +47,7 @@ steps:
         az cdn endpoint purge \
           --resource-group web \
           -n cdne-<< parameters.app-name >><< parameters.environment >>avid \
-          --profile-name cdnp-react-<< parameters.environment >> \
+          --profile-name << parameters.cdn-profile >>-<< parameters.environment >> \
           --subscription << parameters.subscription >> \
           --content-paths /* \
           --no-wait
