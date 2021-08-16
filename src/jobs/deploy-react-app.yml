@@ -21,6 +21,11 @@ parameters:
     type: string
     description: >
       [Staging|Production]
+  storage-account:
+    type: string
+    default: streact
+    description: >
+      Name of the Azure storage excluding the stg/prd suffix
   cdn-profile:
     type: string
     default: cdnp-react
@@ -36,7 +41,7 @@ steps:
       name: Deploy build
       command: |
         CNN_STRING=`az storage account show-connection-string \
-          --name streact<< parameters.environment >> \
+          --name <<parameters.storage-account>><< parameters.environment >> \
           --subscription << parameters.subscription >> \
           | jq '.connectionString'`
         az storage blob sync --source "./<< parameters.build-dir >>/" --container \$web/<< parameters.app-name >> \
