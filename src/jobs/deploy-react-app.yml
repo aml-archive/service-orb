@@ -31,6 +31,11 @@ parameters:
     default: cdnp-react
     description: >
       Name of the Azure CDN Profile excluding the stg/prd suffix
+  cdn-endpoint:
+    type: string
+    default: cdne
+    description: >
+      Prefix for the Azure CDN endpoint. Excluding app name and environment suffix
 
 steps:
   - azure-cli/install
@@ -51,7 +56,7 @@ steps:
       command: |
         az cdn endpoint purge \
           --resource-group web \
-          -n cdne-<< parameters.app-name >><< parameters.environment >>avid \
+          -n << parameters.cdn-endpoint >>-<< parameters.app-name >><< parameters.environment >>avid \
           --profile-name << parameters.cdn-profile >>-<< parameters.environment >> \
           --subscription << parameters.subscription >> \
           --content-paths /* \
