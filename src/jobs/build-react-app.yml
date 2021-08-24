@@ -4,7 +4,7 @@ description: >
 executor: default
 
 docker:
-  - image: cimg/node:15.6.0
+  - image: cimg/node:current
 
 parameters:
   environment:
