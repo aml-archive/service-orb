@@ -60,7 +60,7 @@ steps:
           machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
         EOF
         )
-        docker build --build-arg NETRC=$NETRC --tag ${CIRCLE_PROJECT_REPONAME} .
+        docker build --build-arg NETRC=${NETRC} --tag ${CIRCLE_PROJECT_REPONAME} .
   - run:
       name: Push image
       command: |
