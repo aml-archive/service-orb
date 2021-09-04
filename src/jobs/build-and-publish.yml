@@ -56,7 +56,7 @@ steps:
       name: Build image
       command: |
         # NETRC="machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>"
-        read -r -d '' NETRC <<- EOF
+        read -r -d '' NETRC \<<- EOF
           machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
           machine go.buf.build login $<< parameters.buf-user >> password $<< parameters.buf-password >>
         EOF
