@@ -57,11 +57,11 @@ steps:
       command: |
         # NETRC="machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>"
         read -r -d '' NETRC \<<- EOF
-          machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
-          machine go.buf.build login $<< parameters.buf-user >> password $<< parameters.buf-password >>
+          machine github.com login << parameters.github-user >> password << parameters.github-password >>
+          machine go.buf.build login << parameters.buf-user >> password << parameters.buf-password >>
         EOF
-        echo "$NETRC"
-        docker build --build-arg NETRC="$NETRC" --tag ${CIRCLE_PROJECT_REPONAME} .
+        echo $NETRC
+        docker build --build-arg NETRC=$NETRC --tag ${CIRCLE_PROJECT_REPONAME} .
   - run:
       name: Push image
       command: |
