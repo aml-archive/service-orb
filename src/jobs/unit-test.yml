@@ -60,6 +60,12 @@ steps:
   #               --start-ip-address $machine_ip --end-ip-address $machine_ip
   - checkout
   - run:
+      name: Go env
+      command: |
+        go env -w GONOSUMDB="github.com/avidaml/*,go.buf.build"
+        go env -w GONOPROXY="github.com/avidaml/*,https://go.buf.build,https://proxy.golang.org"
+        go env -w GOPRIVATE="github.com/avidaml/*"
+  - run:
       name: Run tests
       command: go test -v << parameters.packages >>
   # - run:
