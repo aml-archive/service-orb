@@ -55,7 +55,7 @@ steps:
   - run:
       name: Build image
       command: |
-        NETRC=$(\<<- EOF
+        NETRC=$(cat \<<- EOF
           machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
           machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
         EOF
