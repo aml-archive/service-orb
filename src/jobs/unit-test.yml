@@ -27,7 +27,7 @@ parameters:
       Name of database server
   packages:
     type: string
-    default: ./_tests
+    default: ./.tests
     description: >
       A space-separated list of packages to run unit tests for
   resource-group:
@@ -43,35 +43,35 @@ parameters:
       Azure subscription the database belongs to
 
 steps:
-  - when:
-      condition: << parameters.db-server >>
-      steps:
-        - azure-cli/install
-        - azure-cli/login-with-service-principal
-        - run:
-            name: Add firewall rule
-            command: |
-              machine_ip=$(wget -qO- http://checkip.amazonaws.com)
-              az sql server firewall-rule create \
-                --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
-                --resource-group << parameters.resource-group >> \
-                --subscription << parameters.subscription >> \
-                --server << parameters.db-server >> \
-                --start-ip-address $machine_ip --end-ip-address $machine_ip
+  # - when:
+  #     condition: << parameters.db-server >>
+  #     steps:
+  #       - azure-cli/install
+  #       - azure-cli/login-with-service-principal
+  #       - run:
+  #           name: Add firewall rule
+  #           command: |
+  #             machine_ip=$(wget -qO- http://checkip.amazonaws.com)
+  #             az sql server firewall-rule create \
+  #               --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
+  #               --resource-group << parameters.resource-group >> \
+  #               --subscription << parameters.subscription >> \
+  #               --server << parameters.db-server >> \
+  #               --start-ip-address $machine_ip --end-ip-address $machine_ip
   - checkout
   - run:
       name: Run tests
       command: go test -v << parameters.packages >>
-  - run:
-      name: Delete firewall rule
-      command: |
-        set +e
-        set +o pipefail
-        public_ip=$(wget -qO- http://checkip.amazonaws.com)
-        az sql server firewall-rule delete \
-          --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
-          --resource-group << parameters.resource-group >> \
-          --subscription << parameters.subscription >> \
-          --server << parameters.db-server >>
-        exit 0
-      when: always
+  # - run:
+  #     name: Delete firewall rule
+  #     command: |
+  #       set +e
+  #       set +o pipefail
+  #       public_ip=$(wget -qO- http://checkip.amazonaws.com)
+  #       az sql server firewall-rule delete \
+  #         --name CircleCI-${CIRCLE_PROJECT_REPONAME} \
+  #         --resource-group << parameters.resource-group >> \
+  #         --subscription << parameters.subscription >> \
+  #         --server << parameters.db-server >>
+  #       exit 0
+  #     when: always

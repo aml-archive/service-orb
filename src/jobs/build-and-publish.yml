@@ -4,6 +4,26 @@ description: >
 executor: machine
 
 parameters:
+  github-user:
+    type: env_var_name
+    default: GITHUB_USER
+    description: >
+      The name of the environment variable containing the Github login user
+  github-password:
+    type: env_var_name
+    default: GITHUB_PASSWORD
+    description: >
+      The name of the environment variable containing the Github login password
+  buf-user:
+    type: env_var_name
+    default: BUF_USER
+    description: >
+      The name of the environment variable containing the Buf login user
+  buf-password:
+    type: env_var_name
+    default: BUF_PASSWORD
+    description: >
+      The name of the environment variable containing the Buf login password
   docker-user:
     type: env_var_name
     default: DOCKER_USER
@@ -35,9 +55,13 @@ steps:
   - run:
       name: Build image
       command: |
-        docker build \
-          --build-arg NETRC="machine github.com login $<< parameters.docker-user >> password $<< parameters.docker-password >>" \
-          --tag ${CIRCLE_PROJECT_REPONAME} .
+        # NETRC="machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>"
+        read -r -d '' NETRC <<- EOF
+          machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
+          machine go.buf.build login $<< parameters.buf-user >> password $<< parameters.buf-password >>
+        EOF
+        echo "$NETRC"
+        docker build --build-arg NETRC="$NETRC" --tag ${CIRCLE_PROJECT_REPONAME} .
   - run:
       name: Push image
       command: |
