@@ -55,12 +55,17 @@ steps:
   - run:
       name: Build image
       command: |
-        NETRC=$(cat \<<- EOF
-          machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
-          machine go.buf.build login $<< parameters.buf-user >> password $<< parameters.buf-password >>
-        EOF
-        )
-        docker build --build-arg NETRC="${NETRC}" --tag ${CIRCLE_PROJECT_REPONAME} .
+        # NETRC=$(cat \<<- EOF
+        #   machine github.com login $<< parameters.github-user >> password $<< parameters.github-password >>
+        #   machine go.buf.build login $<< parameters.buf-user >> password $<< parameters.buf-password >>
+        # EOF
+        # )
+        docker build \
+          --build-arg << parameters.github-user >> \
+          --build-arg << parameters.github-password >> \
+          --build-arg << parameters.buf-user >> \
+          --build-arg << parameters.buf-password >> \
+          --tag ${CIRCLE_PROJECT_REPONAME} .
   - run:
       name: Push image
       command: |
