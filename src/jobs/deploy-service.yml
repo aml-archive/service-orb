@@ -20,7 +20,7 @@ parameters:
       The Azure subscription the cluster belongs to
   chart:
     type: string
-    default: https://avidaml.github.io/charts/service-1.tgz
+    default: https://ticcaml.github.io/charts/service-1.tgz
     description: >
       The name of the Helm chart to apply
   chart-values:
@@ -51,7 +51,7 @@ steps:
 
   - helm/upgrade-helm-chart:
       chart: << parameters.chart >>
-      namespace: avid
+      namespace: ticc
       release-name: ${CIRCLE_PROJECT_REPONAME}
       values: << parameters.chart-values >>
       helm-version: v3.6.0

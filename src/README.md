@@ -34,9 +34,9 @@ e.g. [semver:patch]
 
 Manual process:
 
-    circleci orb create avidaml/service
+    circleci orb create ticcaml/service
     circleci orb validate ./src/@orb.yml
-    circleci orb publish ./src/@orb.yml avidaml/service@dev:alpha
-    circleci orb publish promote avidaml/service@dev:alpha major
+    circleci orb publish ./src/@orb.yml ticcaml/service@dev:alpha
+    circleci orb publish promote ticcaml/service@dev:alpha major
     
     

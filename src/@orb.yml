@@ -1,10 +1,10 @@
 version: 2.1
 
 description: >
-  Orb to build and deploy Avid AML microservices to Istio service mesh
+  Orb to build and deploy Ticc AML microservices to Istio service mesh
 
 display:
-  home_url: "https://www.avidaml.com"
+  home_url: "https://www.ticcaml.com"
   source_url: "https://www.github.com/ticcaml/service-orb"
 
 orbs:

@@ -61,8 +61,8 @@ steps:
       name: Update database
       command: |
         docker run -v $PWD:/liquibase/changelog liquibase/liquibase \
-          --url="jdbc:sqlserver://<< parameters.db-server >>.database.windows.net:1433;database=avid;" \
-          --username=app@avid@<< parameters.db-server >> \
+          --url="jdbc:sqlserver://<< parameters.db-server >>.database.windows.net:1433;database=ticc;" \
+          --username=app@ticc@<< parameters.db-server >> \
           --password=$<< parameters.db-password >> \
           --changeLogFile=<< parameters.change-log-file >> \
           update
