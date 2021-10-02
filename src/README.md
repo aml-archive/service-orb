@@ -34,9 +34,9 @@ e.g. [semver:patch]
 
 Manual process:
 
-    circleci orb create ticcaml/service
+    circleci orb create credibil/service
     circleci orb validate ./src/@orb.yml
-    circleci orb publish ./src/@orb.yml ticcaml/service@dev:alpha
-    circleci orb publish promote ticcaml/service@dev:alpha major
+    circleci orb publish ./src/@orb.yml credibil/service@dev:alpha
+    circleci orb publish promote credibil/service@dev:alpha major
     
     

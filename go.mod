@@ -1,3 +1,3 @@
-module github.com/ticcaml/service-orb
+module github.com/credibil/service-orb
 
 go 1.17

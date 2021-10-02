@@ -20,7 +20,7 @@ parameters:
       The Azure subscription the cluster belongs to
   chart:
     type: string
-    default: https://ticcaml.github.io/charts/service-1.tgz
+    default: https://credibil.github.io/charts/service-1.tgz
     description: >
       The name of the Helm chart to apply
   chart-values:

@@ -8,7 +8,7 @@ description: >
 usage:
   version: 2.1
   orbs:
-    service: ticcaml/service@1.2.3
+    service: credibil/service@1.2.3
   workflows:
     use-my-orb:
       jobs:

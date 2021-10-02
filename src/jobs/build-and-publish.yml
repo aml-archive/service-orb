@@ -36,7 +36,7 @@ parameters:
       The name of the environment variable containing the Docker login password
   docker-server:
     type: string
-    default: "ghcr.io/ticcaml"
+    default: "ghcr.io/credibil"
     description: >
       Docker container registry
   docker-repo:
